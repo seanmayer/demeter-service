@@ -16,9 +16,8 @@ These instructions will get you a copy of the project up and running on your loc
 ### Installing
 
 1. Clone the repository
-```bash
 git clone https://github.com/seanmayer/demeter-service.git
-```
+
 2. Navigate into the cloned repository
 ```bash
 cd demeter-service
