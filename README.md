@@ -1,4 +1,3 @@
-```markdown
 # Demeter Service
 
 Demeter Service is a Spring Boot application written in Kotlin and Java, built with Maven.
