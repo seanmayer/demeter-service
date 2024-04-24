@@ -1,16 +1,28 @@
 package com.demeter.demeterservice.service
 
+import com.demeter.demeterservice.client.AiClient
+import com.demeter.demeterservice.client.prompt.Prompt
+import com.demeter.demeterservice.client.prompt.PromptTemplate
+import com.demeter.demeterservice.client.response.AiResponse
+import com.demeter.demeterservice.client.response.Generation
 import com.demeter.demeterservice.model.Message
-import com.demeter.demeterservice.config.OpenAIProperties
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+
 @Service
-class MessageService(private val properties: OpenAIProperties) {
-    fun generateMessage(content: String): Message {
-        // Use properties.apiKey and properties.chat to interact with the OpenAI API
-        // For example, you might send `content` to the API and receive a response
-        // Then, you would create a Message object with the response and return it
-        // For the purpose of this example, let's return a dummy message
-        return Message("1", "This is a dummy message")
+class MessageService @Autowired constructor(
+    private val aiClient: AiClient
+) {
+fun generateMessage(content: String): List<Generation>? {
+        val template = PromptTemplate("Fetch me information about {topic} in {language}.")
+        template.addPlaceholder("topic", "artificial intelligence")
+        template.addPlaceholder("language", "Spanish")
+        val prompt = Prompt(content)
+        val response = aiClient.generate(prompt)
+
+        if (response != null) {
+            return response.getGenerations()
+        }; return null
     }
 }
