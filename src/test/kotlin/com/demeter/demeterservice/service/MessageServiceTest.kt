@@ -1,6 +1,5 @@
 package com.demeter.demeterservice.service
 
-import com.demeter.demeterservice.client.AiClient
 import com.demeter.demeterservice.config.OpenAIProperties
 import com.demeter.demeterservice.model.Message
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -10,13 +9,12 @@ import org.mockito.Mockito
 class MessageServiceTest {
 
     private val properties = Mockito.mock(OpenAIProperties::class.java)
-    private val aiClient = Mockito.mock(AiClient::class.java)
-    private val messageService = MessageService(aiClient)
+    private val messageService = MessageService(properties)
 
     @Test
-    fun `generateMessage returns null`() {
+    fun `generateMessage returns a message`() {
         val content = "Hello"
-        val expectedMessage = null
+        val expectedMessage = Message("1", "This is a dummy message")
 
         val result = messageService.generateMessage(content)
 
