@@ -1,23 +1,23 @@
 package com.demeter.demeterservice.service
-
-import com.demeter.demeterservice.config.OpenAIProperties
-import com.demeter.demeterservice.model.Message
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito
+import org.springframework.ai.chat.ChatClient
 
 class MessageServiceTest {
 
-    private val properties = Mockito.mock(OpenAIProperties::class.java)
-    private val messageService = MessageService(properties)
+    private val chatClient = Mockito.mock(ChatClient::class.java)
+    private val messageService = MessageService(chatClient)
 
     @Test
-    fun `generateMessage returns a message`() {
-        val content = "Hello"
-        val expectedMessage = Message("1", "This is a dummy message")
+    fun testGenerateMessage() {
+        val content = "Hello, world!"
+        val response = "Hi there!"
+        Mockito.`when`(chatClient.call(content)).thenReturn(response)
 
-        val result = messageService.generateMessage(content)
-
-        assertEquals(expectedMessage, result)
+        val message = messageService.generateMessage(content)
+        assertNotNull(message.id)
+        assertEquals(response, message.content)
     }
 }
