@@ -1,37 +1,38 @@
 package com.demeter.demeterservice.controller
 
-import com.demeter.demeterservice.service.MessageService
+import com.demeter.demeterservice.client.ChatClientRequest
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
-import org.mockito.junit.jupiter.MockitoExtension
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.http.MediaType
-import org.springframework.test.web.servlet.MockMvc
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
-import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 
-@ExtendWith(MockitoExtension::class)
-@WebMvcTest(MessageController::class)
 class MessageControllerTest {
 
     @Mock
-    private lateinit var messageService: MessageService
+    private lateinit var chatClientRequest: ChatClientRequest
 
     @InjectMocks
     private lateinit var messageController: MessageController
 
-    private lateinit var mockMvc: MockMvc
+    @BeforeEach
+    fun setup() {
+        MockitoAnnotations.openMocks(this)
+    }
 
     @Test
-    fun `generateMessage returns a message`() {
-        mockMvc = MockMvcBuilders.standaloneSetup(messageController).build()
+    fun testGenerateMessage() {
+        val content = "Hello, world!"
+        val response = "Hi there!"
+        Mockito.`when`(chatClientRequest.sendMessage(content)).thenReturn(response)
 
-        mockMvc.perform(post("/messages")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("Hello"))
-            .andExpect(status().isOk)
+        val message = messageController.generateMessage(content)
+
+        assertNotNull(message.id)
+        assertEquals(response, message.content)
+
     }
 }
