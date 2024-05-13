@@ -1,5 +1,6 @@
 package com.demeter.demeterservice.config
 
+import OpenAIProperties
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,10 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest
 ])
 class OpenAIPropertiesTest(@Autowired val openAIProperties: OpenAIProperties) {
 
-/*    @Test
+    @Test
     fun `properties are loaded correctly`() {
         assertEquals("test-api-key", openAIProperties.apiKey)
         assertEquals("test-model", openAIProperties.chat.model)
         assertEquals(0.5f, openAIProperties.chat.temperature)
-    }*/
+    }
 }

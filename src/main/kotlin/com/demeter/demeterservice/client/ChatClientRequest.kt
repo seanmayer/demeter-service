@@ -1,9 +1,12 @@
 package com.demeter.demeterservice.client
-import org.springframework.ai.chat.ChatClient
-import org.springframework.beans.factory.annotation.Autowired
 
-class ChatClientRequest(@Autowired private val chatClient: ChatClient) {
+import OpenAIProperties
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+
+@Service
+class ChatClientRequest(@Autowired private val openAIProperties: OpenAIProperties) {
     fun sendMessage(content: String): String {
-        return chatClient.call(content)
+        return openAIProperties.chatClient(openAIProperties).call(content)
     }
 }
