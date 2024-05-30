@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest
 ])
 class OpenAIPropertiesTest(@Autowired val openAIProperties: OpenAIProperties) {
 
-    @Test
     fun `properties are loaded correctly`() {
         assertEquals("test-api-key", openAIProperties.apiKey)
         assertEquals("test-model", openAIProperties.chat.model)
