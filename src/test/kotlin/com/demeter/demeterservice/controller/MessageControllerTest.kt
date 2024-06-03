@@ -1,39 +1,42 @@
 package com.demeter.demeterservice.controller
 
-import MessageController
-import com.demeter.demeterservice.client.ChatClientRequest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.BeforeEach
+import com.demeter.demeterservice.model.Message
+import com.demeter.demeterservice.service.MessageService
 import org.junit.jupiter.api.Test
-import org.mockito.InjectMocks
-import org.mockito.Mock
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType
+import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.web.reactive.server.WebTestClient
 
+@ExtendWith(SpringExtension::class)
+@SpringBootTest
+@AutoConfigureWebTestClient
 class MessageControllerTest {
 
-    @Mock
-    private lateinit var chatClientRequest: ChatClientRequest
+    @Autowired
+    private lateinit var webTestClient: WebTestClient
 
-    @InjectMocks
-    private lateinit var messageController: MessageController
-
-    @BeforeEach
-    fun setup() {
-        MockitoAnnotations.openMocks(this)
-    }
+    @MockBean
+    private lateinit var messageService: MessageService
 
     @Test
     fun testGenerateMessage() {
-        val content = "Hello, world!"
-        val response = "Hi there!"
-        Mockito.`when`(chatClientRequest.sendMessage(content)).thenReturn(response)
+        val mockMessage = Message(id = "1", content = "Generated message content")
+        Mockito.`when`(messageService.generateMessage(Mockito.anyString())).thenReturn(mockMessage)
 
-        val message = messageController.generateMessage(content)
+        webTestClient.post().uri("/api/messages")
+            .contentType(MediaType.APPLICATION_JSON)
+            .bodyValue("Test content")
+            .exchange()
+            .expectStatus().isOk
+            .expectBody(Message::class.java)
+            .isEqualTo(mockMessage)
 
-        assertNotNull(message.id)
-        assertEquals(response, message.content)
-
+        Mockito.verify(messageService).generateMessage("Test content")
     }
 }
