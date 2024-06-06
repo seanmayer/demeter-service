@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Java 8 or higher
+- Java 17
 - Maven
 - IntelliJ IDEA 2024.1 or any preferred IDE
 
@@ -46,6 +46,17 @@ mvn test
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Maven](https://maven.apache.org/)
 
+## API Documentation
+
+The API documentation is available at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
+
+## Example Requests
+
+### Create a new message
+
+```bash
+curl -X POST "http://localhost:8080/api/messages" -H "Content-Type: application/json" -d '{"id": "123", "content": "This is a new message"}'
+```
 ## License
 
 This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
