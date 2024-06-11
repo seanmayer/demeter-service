@@ -50,6 +50,12 @@ mvn test
 
 The API documentation is available at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
 
+## application.properties
+
+OpenAI API key is required to run the application.
+ 
+`spring.ai.openai.api-key=${SPRING_AI_OPENAI_API_KEY}`
+
 ## Example Requests
 
 ### Create a new message
