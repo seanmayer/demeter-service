@@ -46,10 +46,6 @@ mvn test
 - [Spring Boot](https://spring.io/projects/spring-boot)
 - [Maven](https://maven.apache.org/)
 
-## API Documentation
-
-The API documentation is available at [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html).
-
 ## application.properties
 
 OpenAI API key is required to run the application.
@@ -61,7 +57,8 @@ OpenAI API key is required to run the application.
 ### Create a new message
 
 ```bash
-curl -X POST "http://localhost:8080/api/messages" -H "Content-Type: application/json" -d '{"id": "123", "content": "This is a new message"}'
+curl --location 'http://localhost:8080/api/openai?prompt=Tell%20me%20a%20joke' \
+--header 'Content-Type: application/json'
 ```
 ## License
 
