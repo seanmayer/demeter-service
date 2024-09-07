@@ -1,13 +1,13 @@
 package com.demeter.demeterservice
 
-import OpenAIProperties
+import com.demeter.demeterservice.config.OpenAiConfig
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan
 
 @SpringBootApplication
-@EnableConfigurationProperties(OpenAIProperties::class)
+@EnableConfigurationProperties(OpenAiConfig::class)
 @ComponentScan(basePackages = ["com.demeter.demeterservice"])
 class DemeterServiceApplication {
 	companion object {
